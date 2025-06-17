@@ -1,15 +1,10 @@
-#import kaggle
+
 import pandas as pd
 
-from sklearn.model_selection import train_test_split
-
-#team1 = input("Enter the first team name: ")
-#team2 = input("Enter the second team name: ")
-
-# Read the CSV file
 
 pstats25 = pd.read_csv('vct_2025/players_stats/players_stats.csv')
 df25 = pd.read_csv('vct_2025/matches/scores.csv')
+df24 = pd.read_csv('vct_2024/matches/scores.csv')
 teammap = pd.read_csv('vct_2025/matches/team_mapping.csv')
 
 
@@ -50,6 +45,7 @@ def get_past_matches(team1, team2):
     matches = set()
     for i in range(len(filtered_df) - 1, -1, -1):
         matches.add((filtered_df.iloc[i]['Match Result']))
+
 
 
     return matches
@@ -140,20 +136,6 @@ def get_average_player_stats(team):
     df = pd.DataFrame(data)
     
     return df
-
-
-#bothteamsdata = build_dataframe("FNC", "G2")
-
-#x = df25[:, 0:8]
-#y = df25[:, 8]
-
-#X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
-
-from sklearn.ensemble import RandomForestClassifier
-rf = RandomForestClassifier()
-
-
-
 
 
 #add avg stats to filtered_matches.csv
