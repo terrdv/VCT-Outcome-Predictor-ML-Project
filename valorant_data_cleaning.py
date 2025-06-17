@@ -94,9 +94,37 @@ def get_average_player_stats(team):
     return average_stats
 
 
-#def build_dataframe(team1, team2):
-    team1_full = get_full_team_name(team1)
-    team2_full = get_full_team_name(team2)
+def get_average_player_stats_list(team):
+    filtered_df = pstats25[pstats25['Player'].isin(team)]
+    
+    if filtered_df.empty:
+        return None
+    
+    average_stats = {
+        'K/D Ratio': filtered_df['Kills:Deaths'].mean(),
+        'Average Damage': filtered_df['Average Damage Per Round'].mean(),
+        'Average Combat Score': filtered_df['Average Combat Score'].mean(),
+        'Average First Kills': filtered_df['First Kills'].mean(),
+
+    }
+    
+
+
+
+    return average_stats
+
+
+def build_dataframe(team1, team2):
+    if team1 == "NRG":
+        team1_full = "Mega Minors"
+    else: 
+        team1_full = get_full_team_name(team1)
+
+    if team2 == "NRG":
+        team2_full = "Mega Minors"
+    else: 
+        team2_full = get_full_team_name(team2)
+
 
     if not team1_full or not team2_full:
         return None
@@ -119,27 +147,33 @@ def get_average_player_stats(team):
     overall_winrate_team1 = get_team_winrate(team1_full)
     overall_winrate_team2 = get_team_winrate(team2_full)
 
-    average_stats_team1 = get_average_player_stats(team1_roster)
-    average_stats_team2 = get_average_player_stats(team2_roster)
-
+    average_stats_team1 = get_average_player_stats_list(team1_roster)
+    average_stats_team2 = get_average_player_stats_list(team2_roster)
     data = {
-        'Team': [team1_full, team2_full],
-        'Roster': [team1_roster, team2_roster],
-        'Win Rate vs Opponent': [winrate_team1, winrate_team2],
-        'Overall Win Rate': [overall_winrate_team1, overall_winrate_team2],
-        'Average KD': [average_stats_team1['K/D Ratio'], average_stats_team2['K/D Ratio']],
-        'Average Damage': [average_stats_team1['Average Damage'], average_stats_team2['Average Damage']],
-        'Average Combat Score': [average_stats_team1['Average Combat Score'], average_stats_team2['Average Combat Score']],
-        'Average First Kills': [average_stats_team1['Average First Kills'], average_stats_team2['Average First Kills']],
+        'Team A Winrate vs B': [winrate_team1],
+        'Team A Winrate': [overall_winrate_team1],
+        'Team A K/D Ratio': [average_stats_team1['K/D Ratio']],
+        'Team A Average Damage': [average_stats_team1['Average Damage']],
+        'Team A Average Combat Score': [average_stats_team1['Average Combat Score']],
+        'Team A Average First Kills': [average_stats_team1['Average First Kills']],
+        'Team B Winrate vs A': [winrate_team2],
+        'Team B Winrate': [overall_winrate_team2],
+        'Team B K/D Ratio': [average_stats_team2['K/D Ratio']],
+        'Team B Average Damage': [average_stats_team2['Average Damage']],
+        'Team B Average Combat Score': [average_stats_team2['Average Combat Score']],
+        'Team B Average First Kills': [average_stats_team2['Average First Kills']],
+        
     }
 
     df = pd.DataFrame(data)
-    
+    df.to_csv("stats.csv", index=False)
     return df
+
+    
 
 
 #add avg stats to filtered_matches.csv
-df['Team A winrate vs B'] = df.apply(lambda row: get_winrate_team1(row['Team A'], row['Team B']), axis=1)
+df['Team A Winrate vs B'] = df.apply(lambda row: get_winrate_team1(row['Team A'], row['Team B']), axis=1)
 df['Team A Average Stats'] = df['Team A'].apply(get_average_player_stats)
 df['Team A Winrate'] = df['Team A'].apply(get_team_winrate)
 df['Team B Average Stats'] = df['Team B'].apply(get_average_player_stats)
@@ -150,7 +184,7 @@ team_a_stats_df.columns = ['Team A ' + col for col in team_a_stats_df.columns]
 df = pd.concat([df, team_a_stats_df], axis=1)
 
 #add winrate to filtered_matches.csv
-df['Team B winrate vs A'] = df.apply(lambda row: get_winrate_team1(row['Team B'], row['Team A']), axis=1)
+df['Team B Winrate vs A'] = df.apply(lambda row: get_winrate_team1(row['Team B'], row['Team A']), axis=1)
 df['Team B Average Stats'] = df['Team B'].apply(get_average_player_stats)
 df['Team B Winrate'] = df['Team B'].apply(get_team_winrate)
 # Normalize Team B stats
@@ -171,11 +205,8 @@ df.drop(columns=['Match Result','Team A Average Stats', 'Team B Average Stats'],
 df.to_csv("filtered_matches.csv", index=False)
 
 
-
             
         
-
-
 
 
 
