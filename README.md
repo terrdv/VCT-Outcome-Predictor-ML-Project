@@ -2,17 +2,13 @@
 This project predicts the outcome of professional Valorant Champions Tour (VCT) matches using historical match data and aggregated player statistics.
 
 📊 Project Overview
-Goal: Predict whether Team A wins a given match using machine learning.
+Goal: Predict whether Team A wins against Team B given match using machine learning.
 
 Data: Cleaned dataset includes team matchups, head-to-head winrates, and average player stats.
 
 Models Used:
 
-Random Forest Classifier (primary)
-
-Logistic Regression (optional comparison)
-
-Linear Regression (exploratory)
+Random Forest Classifier (scikit learn)
 
 🧠 Features Used
 Each match includes the following features for both Team A and Team B:
