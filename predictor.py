@@ -1,8 +1,23 @@
 import valorant_data_cleaning 
+import pandas as pd
 from randomforest import prediction
+
+data = pd.read_csv("vct_2025/matches/team_mapping.csv")
 print("Type ABBREVIATIONS for each team \n")
-predictTeamToWin = input("Predict outcome for this team: ")
-opposing = input("Opposing Team: ")
+while True:
+    predictTeamToWin = input("Predict outcome for this team: ")
+    if predictTeamToWin in data['Abbreviated'].values:
+        break
+    else:
+        print("Invalid Input \n")
+
+while True:
+    opposing = input("Opposing Team: ")
+    if opposing in data['Abbreviated'].values:
+        break
+    else:
+        print("Invalid Input \n")
+
 
 teamdata = valorant_data_cleaning.build_dataframe(predictTeamToWin, opposing)
 
