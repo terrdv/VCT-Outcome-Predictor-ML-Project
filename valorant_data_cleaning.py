@@ -88,6 +88,7 @@ def get_average_player_stats(team):
         'Average Damage': filtered_df['Average Damage Per Round'].mean(),
         'Average Combat Score': filtered_df['Average Combat Score'].mean(),
         'Average First Kills': filtered_df['First Kills'].mean(),
+        'Average First Deaths Per Round': filtered_df['First Deaths Per Round'].mean(),
 
     }
     
@@ -105,6 +106,7 @@ def get_average_player_stats_list(team):
         'Average Damage': filtered_df['Average Damage Per Round'].mean(),
         'Average Combat Score': filtered_df['Average Combat Score'].mean(),
         'Average First Kills': filtered_df['First Kills'].mean(),
+        'Average First Deaths Per Round': filtered_df['First Deaths Per Round'].mean(),
 
     }
     
@@ -156,12 +158,14 @@ def build_dataframe(team1, team2):
         'Team A Average Damage': [average_stats_team1['Average Damage']],
         'Team A Average Combat Score': [average_stats_team1['Average Combat Score']],
         'Team A Average First Kills': [average_stats_team1['Average First Kills']],
+        'Team A Average First Deaths Per Round': [average_stats_team1['Average First Deaths Per Round']],
         'Team B Winrate vs A': [winrate_team2],
         'Team B Winrate': [overall_winrate_team2],
         'Team B K/D Ratio': [average_stats_team2['K/D Ratio']],
         'Team B Average Damage': [average_stats_team2['Average Damage']],
         'Team B Average Combat Score': [average_stats_team2['Average Combat Score']],
         'Team B Average First Kills': [average_stats_team2['Average First Kills']],
+        'Team B Average First Deaths Per Round': [average_stats_team2['Average First Deaths Per Round']],
         
     }
 
