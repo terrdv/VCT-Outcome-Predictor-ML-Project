@@ -204,13 +204,91 @@ df['Team A Win'] = df['Match Result'].str.replace(' won', '', regex=False) == df
 df.drop(columns=['Match Result','Team A Average Stats', 'Team B Average Stats'], inplace=True)
 
 
-
-
 df.to_csv("filtered_matches.csv", index=False)
 
 
-            
+
+
+#Build dataframe to predict pistol round win
+
+# def get_past_pistol_matches(team1, team2):
+#     filtered_df = pistolrounds[((pistolrounds['Match Name'] == team1 + " vs " + team2) | (pistolrounds['Match Name'] == team2 + " vs " + team1)) & (pistolrounds['Team'] == team1)]
+#     matches = []
+#     for i in range(len(filtered_df) - 1, -1, -1):
+#         matches.append((filtered_df.iloc[i]['Outcome']))
+
+#     return matches
+
+
+# #RETRIEVES WINRATE FOR TEAM 1 AGAINST TEAM 2
+# def get_pwinrate_team1(team1, team2):
+#     match_set = get_past_pistol_matches(team1, team2)
+#     if len(match_set) == 0:
+#         return None
+#     wins = 0
+#     for match in match_set:
+#         if match ==("Win"):
+#             wins += 1
+#     return wins/(len(match_set)) * 100
+
+
+# #RETRIEVES TEAM PISTOL WINRATE OVERALL
+# def get_team_pwinrate(team):
+#     filtered_df = pistolrounds[pistolrounds['Team'] == team]
+#     total_matches = len(filtered_df)
+#     wins = len(filtered_df[filtered_df['Outcome'] == 'Win'])
+    
+#     if total_matches == 0:
+#         return 0.0
+    
+#     return wins / total_matches * 100
+
+# def winlosstoInt(outcome):
+#     if outcome == 'Win':
+#         return 1
+#     elif outcome == 'Loss':
+#         return 0
+#     else:
+#         return None
+
+# pistolrounds = pd.read_csv('vct_2025/matches/eco_rounds.csv')
+# # Filter for pistol rounds (round 1)
+# pistolrounds = pistolrounds[pistolrounds['Round Number'] == 1]
         
+# pistolrounds = pistolrounds[['Match Name', 'Team','Outcome']]
+
+
+
+# pistolrounds[['Team A', 'Team B']] = pistolrounds['Match Name'].str.split(' vs ', expand=True)
+# pistolrounds['Team A Pistol Winrate vs B'] = pistolrounds.apply(lambda row: get_pwinrate_team1(row['Team A'], row['Team B']), axis=1)
+# pistolrounds['Team B Pistol Winrate vs A'] = pistolrounds.apply(lambda row: get_pwinrate_team1(row['Team B'], row['Team A']), axis=1)
+# pistolrounds['Team A Pistol Winrate'] = pistolrounds['Team A'].apply(get_team_pwinrate)
+# pistolrounds['Team B Pistol Winrate'] = pistolrounds['Team B'].apply(get_team_pwinrate)
+# pistolrounds['Outcome'] = pistolrounds['Outcome'].apply(winlosstoInt)
+
+# pistolrounds['Team A Average Stats'] = pistolrounds['Team A'].apply(get_average_player_stats)
+# pistolrounds['Team B Average Stats'] = pistolrounds['Team B'].apply(get_average_player_stats)
+
+# team_a_stats_df = pistolrounds['Team A Average Stats'].apply(pd.Series).round(2)
+# team_a_stats_df.columns = ['Team A ' + col for col in team_a_stats_df.columns]
+
+# pistolrounds = pd.concat([pistolrounds, team_a_stats_df], axis=1)
+
+# team_b_stats_df = pistolrounds['Team B Average Stats'].apply(pd.Series).round(2)
+# team_b_stats_df.columns = ['Team B ' + col for col in team_b_stats_df.columns]
+
+# pistolrounds = pd.concat([pistolrounds, team_b_stats_df], axis=1)
+
+# pistolrounds.drop(columns=['Team A Average Stats', 'Team B Average Stats'], inplace=True)
+
+# pistolrounds.to_csv("pistol_rounds.csv", index=False)
+
+#print(get_pwinrate_team1("Sentinels", "G2 Esports"))
+
+
+
+
+
 
 
 

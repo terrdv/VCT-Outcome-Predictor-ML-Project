@@ -36,9 +36,9 @@ print("Accuracy:", accuracy_score(y_test, y_pred))
 def prediction(df):
     preds = []
 
-    for _ in range(10):
+    for _ in range(50):
         pred = rf.predict(df)
-        preds.append(pred[0])  # Assuming df is a single-row DataFrame
+        preds.append(pred[0]) 
 
     majority_vote = Counter(preds).most_common(1)[0][0]
     return majority_vote

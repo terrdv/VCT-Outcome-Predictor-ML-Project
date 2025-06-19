@@ -43,7 +43,7 @@ print("Accuracy:", accuracy_score(y_test, y_pred))
 def predictionLog(df):
     preds = []
 
-    for _ in range(10):
+    for _ in range(50):
         pred = log_reg.predict(df)
         preds.append(pred[0])  # Assuming df is a single-row DataFrame
 
