@@ -1,4 +1,4 @@
-import valorant_data_cleaning 
+import valorant_data_cleaning
 import pandas as pd
 from randomforest import prediction_probability
 from logreg import predictionLog_probability_order_invariant

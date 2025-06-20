@@ -170,7 +170,6 @@ def build_dataframe(team1, team2):
     }
 
     df = pd.DataFrame(data)
-    df.to_csv("stats.csv", index=False)
     return df
 
     
