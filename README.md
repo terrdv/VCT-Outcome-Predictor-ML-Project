@@ -26,4 +26,13 @@ Average Combat Score
 Average First Kills
 
 2025/06/16
-- Prediction Accuracy = 80% 
+- Prediction Accuracy = 80%
+
+
+VCT Masters Toronto 2025:
+- GenG vs G2: Correct Preditction G2
+- Sentinels vs Fnatic: Correct Prediction SEN
+- PRX vs WOL: Correct Prediction PRX
+- G2 vs FNC: Incorrect Prediction G2
+- WOL vs FNC: Correct Prediction FNC
+- PRX vs FNC: Correct Prediction PRX
