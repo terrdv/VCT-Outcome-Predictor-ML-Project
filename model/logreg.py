@@ -1,5 +1,5 @@
 import pandas as pd
-
+import joblib
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
@@ -43,31 +43,45 @@ def create_order_invariant_data(df):
     return augmented_data
 
 
-augmented_vct_data = create_order_invariant_data(vct_data)
+# augmented_vct_data = create_order_invariant_data(vct_data)
 
-x_augmented = augmented_vct_data[feature_cols]
-y_augmented = augmented_vct_data['Team A Win']
+# x_augmented = augmented_vct_data[feature_cols]
+# y_augmented = augmented_vct_data['Team A Win']
 
-X_train, X_test, y_train, y_test = train_test_split(x_augmented, y_augmented, test_size=0.2, random_state=42)
-
-
-scaler = StandardScaler()
-X_train_scaled = pd.DataFrame(scaler.fit_transform(X_train), columns=feature_cols)
-X_test_scaled = pd.DataFrame(scaler.transform(X_test), columns=feature_cols)
-
-log_reg = LogisticRegression(max_iter=5000, random_state=42)
-
-log_reg.fit(X_train_scaled, y_train)
+# X_train, X_test, y_train, y_test = train_test_split(x_augmented, y_augmented, test_size=0.2, random_state=42)
 
 
-y_pred = log_reg.predict(X_test_scaled)
-print("Accuracy:", accuracy_score(y_test, y_pred))
+# scaler = StandardScaler()
+# X_train_scaled = pd.DataFrame(scaler.fit_transform(X_train), columns=feature_cols)
+# X_test_scaled = pd.DataFrame(scaler.transform(X_test), columns=feature_cols)
+
+# log_reg = LogisticRegression(max_iter=5000, random_state=42)
+
+# log_reg.fit(X_train_scaled, y_train)
+
+# joblib.dump(log_reg, 'logistic_regression_model.pkl')
+# joblib.dump(scaler, 'scaler.pkl')
+# joblib.dump(X_test_scaled, 'x_test_scaled.pkl')
+# joblib.dump(y_test, 'y_testlog.pkl')
+
+
+
+
+
+# X_test_scaled = joblib.load('x_test_scaled.pkl')        
+# y_test = joblib.load('y_testlog.pkl')
+# y_pred = log_reg.predict(X_test_scaled)
+# print("Accuracy:", accuracy_score(y_test, y_pred))
 def predictionLog(df):
+    log_reg = joblib.load('logistic_regression_model.pkl')
+    scaler = joblib.load('scaler.pkl')
     data_scaled = pd.DataFrame(scaler.transform(df), columns=feature_cols)
     pred = log_reg.predict(data_scaled)
     return pred[0]
 
 def predictionLog_probability_order_invariant(df, threshold=0.5):
+    log_reg = joblib.load('logistic_regression_model.pkl')
+    scaler = joblib.load('scaler.pkl')
     """Order-invariant probability-based prediction"""
     # Make prediction with original order
     data_scaled = pd.DataFrame(scaler.transform(df), columns=feature_cols)

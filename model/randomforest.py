@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-
+import joblib
 
 vct_data = pd.read_csv('filtered_matches.csv')
 
@@ -36,26 +36,34 @@ def create_order_invariant_data(df):
     return augmented_data
 
 
-augmented_vct_data = create_order_invariant_data(vct_data)
+# augmented_vct_data = create_order_invariant_data(vct_data)
 
-x_augmented = augmented_vct_data[feature_cols]
-y_augmented = augmented_vct_data['Team A Win'].astype(int)
+# x_augmented = augmented_vct_data[feature_cols]
+# y_augmented = augmented_vct_data['Team A Win'].astype(int)
 
-X_train, X_test, y_train, y_test = train_test_split(x_augmented, y_augmented, test_size=0.2, random_state=42)
+# X_train, X_test, y_train, y_test = train_test_split(x_augmented, y_augmented, test_size=0.2, random_state=42)
 
-from sklearn.ensemble import RandomForestClassifier
-rf_augmented = RandomForestClassifier(n_estimators=100, random_state=42, max_depth=10)
-rf_augmented.fit(X_train, y_train)
+# rf_augmented = RandomForestClassifier(n_estimators=100, random_state=42, max_depth=10)
+# rf_augmented.fit(X_train, y_train)
 
-print("Accuracy:", rf_augmented.score(X_test, y_test))
+# joblib.dump(rf_augmented, 'rf_augmented_model.pkl')
+# joblib.dump(X_test, 'x_test.pkl')
+# joblib.dump(y_test, 'y_test.pkl')
+
+
+# X_test = joblib.load('x_test.pkl')
+# y_test = joblib.load('y_test.pkl')
+# print("Accuracy:", rf_augmented.score(X_test, y_test))
 
 
 def prediction(df):
-    
+    rf_augmented = joblib.load('rf_augmented_model.pkl')
     pred = rf_augmented.predict(df)
     return pred[0]  
 
 def prediction_probability(df, threshold=0.5):
+    rf_augmented = joblib.load('rf_augmented_model.pkl')
     prob = rf_augmented.predict_proba(df)
     team_a_win_prob = prob[0][1]  # Probability of Team A winning
     return 1 if team_a_win_prob >= threshold else 0
+
