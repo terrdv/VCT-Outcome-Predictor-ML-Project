@@ -28,6 +28,8 @@ Average First Kills
 2025/06/16
 - Prediction Accuracy = 80%
 
+How to run:
+- Run app.py 
 
 VCT Masters Toronto 2025:
 - GenG vs G2: Correct Preditction G2
