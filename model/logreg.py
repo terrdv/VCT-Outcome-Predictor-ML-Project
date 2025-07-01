@@ -7,7 +7,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import StandardScaler
 
 
-vct_data = pd.read_csv('filtered_matches.csv')
+vct_data = pd.read_csv('model/data/filtered_matches.csv')
 
 vct_data = vct_data.dropna()
 
@@ -73,15 +73,15 @@ def create_order_invariant_data(df):
 # y_pred = log_reg.predict(X_test_scaled)
 # print("Accuracy:", accuracy_score(y_test, y_pred))
 def predictionLog(df):
-    log_reg = joblib.load('logistic_regression_model.pkl')
-    scaler = joblib.load('scaler.pkl')
+    log_reg = joblib.load('model/logistic_regression_model.pkl')
+    scaler = joblib.load('model/scaler.pkl')
     data_scaled = pd.DataFrame(scaler.transform(df), columns=feature_cols)
     pred = log_reg.predict(data_scaled)
     return pred[0]
 
 def predictionLog_probability_order_invariant(df, threshold=0.5):
-    log_reg = joblib.load('logistic_regression_model.pkl')
-    scaler = joblib.load('scaler.pkl')
+    log_reg = joblib.load('model\logistic_regression_model.pkl')
+    scaler = joblib.load('model/scaler.pkl')
     """Order-invariant probability-based prediction"""
     # Make prediction with original order
     data_scaled = pd.DataFrame(scaler.transform(df), columns=feature_cols)

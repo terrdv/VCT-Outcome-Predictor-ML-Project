@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 import joblib
 
-vct_data = pd.read_csv('filtered_matches.csv')
+vct_data = pd.read_csv('model/data/filtered_matches.csv')
 
 feature_cols = [
     'Team A Winrate vs B', 'Team A Winrate', 'Team A K/D Ratio', 'Team A Average Damage',
@@ -57,12 +57,12 @@ def create_order_invariant_data(df):
 
 
 def prediction(df):
-    rf_augmented = joblib.load('rf_augmented_model.pkl')
+    rf_augmented = joblib.load('model/rf_augmented_model.pkl')
     pred = rf_augmented.predict(df)
     return pred[0]  
 
 def prediction_probability(df, threshold=0.5):
-    rf_augmented = joblib.load('rf_augmented_model.pkl')
+    rf_augmented = joblib.load('model/rf_augmented_model.pkl')
     prob = rf_augmented.predict_proba(df)
     team_a_win_prob = prob[0][1]  # Probability of Team A winning
     return 1 if team_a_win_prob >= threshold else 0
